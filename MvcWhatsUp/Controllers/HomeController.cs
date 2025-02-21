@@ -21,6 +21,14 @@ namespace MvcWhatsUp.Controllers
         {
             return View();
         }
+        public IActionResult Chats()
+        {
+            return View();
+        }
+        public IActionResult Contacts()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
