@@ -2,8 +2,9 @@
 @{
     ViewData["Title"] = "Users";
 }
-<div class ="text-center">
-    <h1 class = "display-4">Users</h1>
+<div class ="text-left">
+    <strong><h1 class="display-4">Users</h1></strong>
+    <a href="/Users/Create">Create New</a>
 </div>
 <table class="table">
     <thead>
@@ -12,6 +13,7 @@
             <th>Name</th>
             <th>Mobile number</th>
             <th>Email address</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +25,10 @@
                     <td>@user.UserName</td>
                     <td>@user.MobileNumber</td>
                     <td>@user.EmailAddress</td>
+                    <td>
+                    <a href="/Users/Edit/@user.UserId">Edit</a> |
+                    <a href="/Users/Delete/@user.UserId">Delete</a>
+                    </td>
                 </tr>
             }
         }

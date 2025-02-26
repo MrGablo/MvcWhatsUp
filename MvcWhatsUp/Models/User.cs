@@ -7,6 +7,10 @@
         public string UserName { get; set; }
         public string MobileNumber { get; set; }
 
+        public User()
+        {
+            
+        }
         public User(int id, string name, string mobileNumber, string emailAddress)
         {
             EmailAddress = emailAddress;

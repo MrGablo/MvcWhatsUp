@@ -43,6 +43,7 @@ button.accept-policy {
 }
 
 .footer {
+  background-color: lightgreen;
   position: absolute;
   bottom: 0;
   width: 100%;
