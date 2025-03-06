@@ -47,9 +47,9 @@ namespace MvcWhatsUp.Controllers
             return View();
         }
         [HttpPost]
-        public string SendMessage(string message, string name)
+        public string SendMessage(SimpleMessage message1)
         {
-             return $"Message {message} has been sent by {name}";
+             return $"Message {message1.Message} has been sent by {message1.Name}";
         }
         [HttpGet]
         public IActionResult Login()
@@ -57,9 +57,9 @@ namespace MvcWhatsUp.Controllers
             return View();
         }
         [HttpPost]
-        public string Login(string email, string password)
+        public string Login(SimpleLogin login)
         {
-            return $"Email: {email}, Password: {password}";
+            return $"Email: {login.Email}, Password: {login.Password}";
         }
     }
 }

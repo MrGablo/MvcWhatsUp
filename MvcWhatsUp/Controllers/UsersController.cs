@@ -7,9 +7,9 @@ namespace MvcWhatsUp.Controllers
     public class UsersController : Controller
     {
         private readonly IUsersRepository _usersRepository;
-        public UsersController() 
+        public UsersController(IUsersRepository usersRepository) 
         {
-            _usersRepository = new DummyUsersRepositor();
+            _usersRepository = usersRepository;
         }
         public IActionResult Index()
         {
