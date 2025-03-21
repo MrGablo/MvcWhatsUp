@@ -13,6 +13,11 @@ namespace MvcWhatsUp.Controllers
         }
         public IActionResult Index()
         {
+            //get logged in user through cookie
+            string? userId = Request.Cookies["UserId"];
+
+            ViewData["UserId"] = userId;
+
             //get all the users
             List<User> users = _usersRepository.GetAll();
             //return the view
@@ -70,7 +75,7 @@ namespace MvcWhatsUp.Controllers
             }
         }
         //Get: Delete
-        [HttpGet]
+        [HttpGet]   
         public IActionResult Delete(int? id)
         {
             if(id == null)
@@ -93,6 +98,29 @@ namespace MvcWhatsUp.Controllers
             catch (Exception ex)
             {
                 return View(user);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Login(LoginModel loginModel)
+        {
+            User? user = _usersRepository.GetByLoginCredentials(loginModel.UserName, loginModel.Password);
+            if(user == null)
+            {
+                return View(loginModel);
+            }
+            else
+            {
+                //cookie to remeber user
+                Response.Cookies.Append("UserId", user.UserId.ToString());
+
+                //redirect to list of users
+                return RedirectToAction("index", "Users");
             }
         }
     }

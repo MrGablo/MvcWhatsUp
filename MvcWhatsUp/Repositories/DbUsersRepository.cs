@@ -140,5 +140,25 @@ namespace MvcWhatsUp.Repositories
                 }
             }
         }
+
+        User? IUsersRepository.GetByLoginCredentials(string userName, string password)
+        {
+            //get user (from repository)
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = $"SELECT UserId, UserName, MobileNumber, EmailAddress FROM Users WHERE UserName = @UserName AND Password = @Password";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Password",password);
+                command.Parameters.AddWithValue("@UserName", userName);
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    User user = ReadUser(reader);
+                    return user;
+                }
+            }
+            return null;
+        }
     }
 }

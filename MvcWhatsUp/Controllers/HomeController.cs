@@ -61,5 +61,6 @@ namespace MvcWhatsUp.Controllers
         {
             return $"Email: {login.Email}, Password: {login.Password}";
         }
+
     }
 }

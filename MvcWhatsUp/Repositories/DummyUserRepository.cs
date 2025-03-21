@@ -12,6 +12,11 @@ namespace MvcWhatsUp.Repositories
         new User(3, "Morris Bellamy", "06-56190265", "morris.bellamy@gmail.com"),
         ];
 
+        public User? GetByLoginCredentials(string userName, string password)
+        {
+            throw new NotImplementedException();
+        }
+
         void IUsersRepository.Add(User user)
         {
             users.Add(user);

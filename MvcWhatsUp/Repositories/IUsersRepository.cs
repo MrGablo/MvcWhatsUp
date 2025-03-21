@@ -9,5 +9,6 @@ namespace MvcWhatsUp.Repositories
         void Add(User user);
         void Update(User user);
         void Delete(User user);
+        User? GetByLoginCredentials(string userName, string password);
     }
 }
