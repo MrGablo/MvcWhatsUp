@@ -11,11 +11,23 @@ namespace MvcWhatsUp.Repositories
             //get (database) connection from appsettings
             _connectionString = configuration.GetConnectionString("WhatsUpDatabase");
         }
+        private Message ReadMessage(SqlDataReader reader)
+        {
+            //retrieve data from fields
+            int id = (int)reader["MessageId"];
+            int senderUserId = (int)reader["SenderUserId"];
+            int receiverUserId = (int)reader["ReceiverUserId"];
+            string message = (string)reader["Message"];
+            DateTime sendAt = (DateTime)reader["SendAt"];
+
+            //return new Message object
+            return new Message(id, senderUserId, receiverUserId, message, sendAt);
+        }
         public void AddMessage(Message message)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"INSERT INTO Chats(SenderUserId, ReceiverUserId, Message, SendAt)" +
+                string query = $"INSERT INTO Messages(SenderUserId, ReceiverUserId, Message, SendAt)" +
                     "VALUES (@SenderUserId, @ReceiverUserId, @Message, @SendAt)" +
                     "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
@@ -28,11 +40,11 @@ namespace MvcWhatsUp.Repositories
                 command.Connection.Open();
                 message.MessageId = Convert.ToInt32(command.ExecuteScalar());
             }
-            throw new NotImplementedException();
         }
 
         public List<Message> GetMessages(int userId1, int userId2)
         {
+            List<Message> messages = new List<Message>();
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT MessageId, SenderUserId, ReceiverUserId, Message, SendAt FROM Messages "
@@ -46,9 +58,15 @@ namespace MvcWhatsUp.Repositories
 
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Message message = ReadMessage(reader);
+                    messages.Add(message);
+                }
+                reader.Close();
 
             }
-            throw new NotImplementedException();
+            return messages;
         }
     }
 }

@@ -8,6 +8,9 @@
         public string MessageText { get; set; }
         public DateTime SendAt { get; set; }
 
+        public Message()
+        {
+        }
         public Message(int id, int senderUserId, int receiverUserId,
                        string messageText, DateTime sendAt)
         {
